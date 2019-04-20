@@ -17,4 +17,8 @@ module.exports = Header
 
 如果npm webpack -v 无法打印版本号，则使用npx
 
-例如：npx webpack -v  npx会去node_modules包中找webpack版本号
+例如：npx webpack -v  
+
+npx会去node_modules包中找webpack版本号
+
+查看版本号: npm info webpack
