@@ -1,5 +1,5 @@
 import logo from './logo.png'
-import './index.css'
+import './index.scss'
 
 var root = document.getElementById('root')
 var img = new Image()
