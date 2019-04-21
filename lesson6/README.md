@@ -2,7 +2,7 @@
 
 要在js文件中引用css，需要配置style-loader，css-loader
 
-postcss-loader 添加css3浏览器厂商前缀
+postcss-loader 添加css3浏览器厂商前缀,需要创建postcss.config.js 配置对应的插件才可生效
 
 sass-loader  将sass类型文件编译成正常的css文件
 
