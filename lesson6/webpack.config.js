@@ -54,6 +54,15 @@ module.exports = {
         ],
       },
 
+      // 3.打包iconfont字体文件的打包形式
+      {
+        test: /\.(eot|svg|ttf|woff)$/,
+        use: {
+          loader: 'file-loader',
+        }
+      }
+
+
     ]
   },
 

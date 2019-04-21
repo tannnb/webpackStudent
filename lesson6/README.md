@@ -12,3 +12,6 @@ style-loader 将合并后的css挂载到页面的header部分
 
 
 开启css模块化，防止影响其他文件样式 styles[name]
+
+
+打包字体文件，使用file-loader处理字体文件的引入等
