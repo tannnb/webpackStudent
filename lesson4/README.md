@@ -6,3 +6,4 @@ webpack有自己的默认配置文件，当没有webpack.config.js的时候webpa
 
 webpack是局部安装的，为什么能npm run bundle？ 因为安装了webpack-cli，他可以在cmd中正确运行webpack命令
 - scripts 中配置 "bundle":""webpack"  => npm run bundle
+- 配置项不填mode，cmd中打包会有警告，默认mode:"production"
