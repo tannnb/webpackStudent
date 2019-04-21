@@ -13,11 +13,20 @@ module.exports = {
     // 配置规则
     rules:[
       // file-loader能打包的，url-loader都可以打包，配置一样
-      // url-loader 打包图片会将图片转成base64
+      // url-loader 打包图片会将图片转成base64,可以控制图片打包大小类型(推荐)
       {
         test:/\.(jpg|png|gif)$/,
         use:{
-          loader:'file-loader'
+          loader:'url-loader',
+          options:{
+            // placeholder 占位符
+            // 打包图片的名字：[name] 表示原来的图片名，[ext] 原来的后缀名
+            name:'[name]_[hash].[ext]',
+            // 将图片打包到指定目录
+            outputPath: './images',
+            // 如果图片字节大于2k(2048)的话，会打包到制定目录，反之则将图片转成base64
+            limit: 2048,
+          }
         }
       }
     ]
