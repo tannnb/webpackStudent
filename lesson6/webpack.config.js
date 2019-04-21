@@ -41,7 +41,14 @@ module.exports = {
         test: /\.(css|scss)$/,
         use: [
           'style-loader',
-          'css-loader',
+          {
+            loader:'css-loader',
+            options:{
+              importLoaders:2,
+              // 开启css modules模块化打包，可以避免css冲突
+              modules: true,
+            }
+          },
           'sass-loader',
           'postcss-loader'
         ],
