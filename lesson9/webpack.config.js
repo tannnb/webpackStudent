@@ -103,7 +103,8 @@ module.exports = {
 
 
     // 当在【打包之前】，会使用cleanWebpackPlugin插件帮助我们去删除dist下的内容 2.0版本，会默认删除dist目录下的文件
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+
 
   ],
 
