@@ -9,10 +9,7 @@ module.exports = {
   mode: 'development',
 
   // 打包入口文件; 完整写法 => { main:'./src/index.js' }
-  entry:{
-    main:'./src/index.js',
-    sub:'./src/index.js'
-  },
+  entry:'./src/index.js',
 
 
   module:{
@@ -89,14 +86,8 @@ module.exports = {
 
   // 打包出口，生成的文件
   output:{
-
-    // 如果想再打包后引入的js前加上http地址可配置publicPath: http://cdn.com.cn
-    publicPath: '/',
-
     // 生成文件的名字
-    // 如果entry配置了多个打包入口，他们filename必须要不同，如果名称相同则打包会失败，名称重复冲突
-    // 解决办法，将filename用占位符表示，例[name]
-    filename:'[name].bundle.js',
+    filename:'dist.js',
     // 打包出的文件放入的目录，不指定path，webpack内部默认文件夹就是dist
     path:path.resolve(__dirname,'dist')
   }
