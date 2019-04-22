@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
@@ -13,6 +14,23 @@ module.exports = {
   // 线上代码的话，一般关闭devtool 或者使用 cheap-module-source-map
   devtool: 'cheap-module-eval-source-map',
 
+
+  devServer:{
+    // 启动一个服务器，并且服务器的路径为dist目录
+    contentBase: './dist',
+    // 默认端口
+    port: 8080,
+    // 自动打开默认浏览器
+    open: true,
+    // 开启热更新
+    hot: true,
+    // 即使html不生效，浏览器也不要自动刷新
+    hotOnly: true,
+    // 跨域代理
+    proxy: {
+      '/api': 'http://www.tannnb.com',
+    },
+  },
 
   // 打包入口文件; 完整写法 => { main:'./src/index.js' }
   entry:'./src/index.js',
@@ -86,7 +104,12 @@ module.exports = {
 
 
     // 当在【打包之前】，会使用cleanWebpackPlugin插件帮助我们去删除dist下的内容 2.0版本，会默认删除dist目录下的文件
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+
+    // 在devServer开启了hot和hotOnly 配置热更新插件，才会生效
+    // 可以在写css和js的时候 方便时时调试样式
+    new webpack.HotModuleReplacementPlugin(),
+
 
   ],
 
