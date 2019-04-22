@@ -14,6 +14,23 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
 
+  devServer:{
+    // 启动一个服务器，并且服务器的路径为dist目录
+    contentBase: './dist',
+    // 默认端口
+    port: 8080,
+    // 自动打开默认浏览器
+    open: true,
+    // 开启热更新
+    hot: true,
+    // 即使html不生效，浏览器也不要自动刷新
+    hotOnly: true,
+    // 跨域代理
+    proxy: {
+      '/api': 'http://www.tannnb.com',
+    },
+  },
+
   // 打包入口文件; 完整写法 => { main:'./src/index.js' }
   entry:'./src/index.js',
 
