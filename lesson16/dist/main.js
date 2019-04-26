@@ -112,7 +112,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "15481347e854db017d03";
+/******/ 	var hotCurrentHash = "6709f2e101bc5d43483d";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -761,6 +761,11 @@
 /******/
 /******/ 	var deferredModules = [];
 /******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".js"
+/******/ 	}
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -788,6 +793,64 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -841,6 +904,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
@@ -869,7 +935,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n// 1m\n // 业务逻辑1m\n\nconsole.log(lodash__WEBPACK_IMPORTED_MODULE_0___default.a.join(['a', 'b', 'c'], '***')); // 10W行业务逻辑\n\nconsole.log(lodash__WEBPACK_IMPORTED_MODULE_0___default.a.join(['a', 'b', 'c'], '***')); // 打包之后main.js  2m\n// 打包文件会很大，加载时间长\n// 用户重新访问页面，又要加载2m的内容\n// 第二种方式\n// main.js 被拆分成lodash.js(1m) 和main.js(1m)\n// 当业务逻辑发生变化时，只要加载main.js即可\n// code splitting 代码分割//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyAxbVxuaW1wb3J0IF8gZnJvbSAnbG9kYXNoJ1xuXG4vLyDkuJrliqHpgLvovpExbVxuY29uc29sZS5sb2coXy5qb2luKFsnYScsICdiJywgJ2MnXSwnKioqJykpXG5cbi8vIDEwV+ihjOS4muWKoemAu+i+kVxuY29uc29sZS5sb2coXy5qb2luKFsnYScsICdiJywgJ2MnXSwnKioqJykpXG5cbi8vIOaJk+WMheS5i+WQjm1haW4uanMgIDJtXG4vLyDmiZPljIXmlofku7bkvJrlvojlpKfvvIzliqDovb3ml7bpl7Tplb9cbi8vIOeUqOaIt+mHjeaWsOiuv+mXrumhtemdou+8jOWPiOimgeWKoOi9vTJt55qE5YaF5a65XG5cblxuLy8g56ys5LqM56eN5pa55byPXG4vLyBtYWluLmpzIOiiq+aLhuWIhuaIkGxvZGFzaC5qcygxbSkg5ZKMbWFpbi5qcygxbSlcbi8vIOW9k+S4muWKoemAu+i+keWPkeeUn+WPmOWMluaXtu+8jOWPquimgeWKoOi9vW1haW4uanPljbPlj69cblxuXG4vLyBjb2RlIHNwbGl0dGluZyDku6PnoIHliIblibJcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUVBO0FBR0E7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQUdBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/index.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es6_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.promise */ \"./node_modules/core-js/modules/es6.promise.js\");\n/* harmony import */ var core_js_modules_es6_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_promise__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var core_js_modules_es6_object_to_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es6.object.to-string */ \"./node_modules/core-js/modules/es6.object.to-string.js\");\n/* harmony import */ var core_js_modules_es6_object_to_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_to_string__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n// 1m\n//import _ from 'lodash'\n// 业务逻辑1m\n//console.log(_.join(['a', 'b', 'c'],'***'))\n// 10W行业务逻辑\n//console.log(_.join(['a', 'b', 'c'],'***'))\n// 打包之后main.js  2m\n// 打包文件会很大，加载时间长\n// 用户重新访问页面，又要加载2m的内容\n// 第二种方式\n// main.js 被拆分成lodash.js(1m) 和main.js(1m)\n// 当业务逻辑发生变化时，只要加载main.js即可\n// code splitting 代码分割\n// 使用import异步加载\nfunction getComponent() {\n  return new Promise(function (resolve) {\n    __webpack_require__.e(/*! require.ensure */ 0).then((function (require) {\n      resolve(__webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\"));\n    }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);\n  }).then(function (_ref) {\n    var _ = _ref.default;\n    var element = document.createElement('div');\n    element.innerHTML = _.join(['a', 'b', 'c'], '-');\n    return element;\n  });\n}\n\ngetComponent().then(function (element) {\n  document.body.appendChild(element);\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyAxbVxuLy9pbXBvcnQgXyBmcm9tICdsb2Rhc2gnXG5cbi8vIOS4muWKoemAu+i+kTFtXG4vL2NvbnNvbGUubG9nKF8uam9pbihbJ2EnLCAnYicsICdjJ10sJyoqKicpKVxuXG4vLyAxMFfooYzkuJrliqHpgLvovpFcbi8vY29uc29sZS5sb2coXy5qb2luKFsnYScsICdiJywgJ2MnXSwnKioqJykpXG5cbi8vIOaJk+WMheS5i+WQjm1haW4uanMgIDJtXG4vLyDmiZPljIXmlofku7bkvJrlvojlpKfvvIzliqDovb3ml7bpl7Tplb9cbi8vIOeUqOaIt+mHjeaWsOiuv+mXrumhtemdou+8jOWPiOimgeWKoOi9vTJt55qE5YaF5a65XG5cblxuLy8g56ys5LqM56eN5pa55byPXG4vLyBtYWluLmpzIOiiq+aLhuWIhuaIkGxvZGFzaC5qcygxbSkg5ZKMbWFpbi5qcygxbSlcbi8vIOW9k+S4muWKoemAu+i+keWPkeeUn+WPmOWMluaXtu+8jOWPquimgeWKoOi9vW1haW4uanPljbPlj69cblxuXG4vLyBjb2RlIHNwbGl0dGluZyDku6PnoIHliIblibJcblxuXG4vLyDkvb/nlKhpbXBvcnTlvILmraXliqDovb1cbmZ1bmN0aW9uIGdldENvbXBvbmVudCgpIHtcbiAgcmV0dXJuIGltcG9ydCgnbG9kYXNoJykudGhlbigoe2RlZmF1bHQ6X30pID0+IHtcbiAgICB2YXIgZWxlbWVudCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpXG4gICAgZWxlbWVudC5pbm5lckhUTUwgPSBfLmpvaW4oWydhJywgJ2InLCAnYyddLCctJylcbiAgICByZXR1cm4gZWxlbWVudFxuICB9KVxufVxuXG5nZXRDb21wb25lbnQoKS50aGVuKGVsZW1lbnQgPT4ge1xuICBkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGVsZW1lbnQpXG59KVxuIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQUdBO0FBR0E7QUFDQTtBQUNBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/index.js\n");
 
 /***/ })
 
