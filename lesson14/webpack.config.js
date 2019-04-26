@@ -147,6 +147,13 @@ module.exports = {
 
   ],
 
+  // 开发环境的时候 配置tree shaking，另外还需要在package.json中写入 "sideEffects":false 对所有模块进行tree shaking
+  // 如果需要对特殊文件进行设置 不处理；那么比如：在打包的时候不去处理@babel/polly-fill;需要修改配置"sideEffects":[@babel/polly-fill]
+  optimization:{
+    usedExports:true
+  },
+
+
   // 打包出口，生成的文件
   output: {
     // 生成文件的名字
