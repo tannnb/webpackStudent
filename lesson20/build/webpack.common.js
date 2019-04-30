@@ -34,7 +34,7 @@ module.exports = {
     ],
   },
 
-
+  // manifest
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',
