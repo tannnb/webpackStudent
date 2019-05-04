@@ -15,6 +15,7 @@ module.exports = {
     port: 8080,
     hot: true,
     hotOnly: true,
+    historyApiFallback: true,  // 配置 就可以实现路由跳转
     proxy: {
       // 只在开发环境下起作用
       // 将请求转发到http://www.dell-lee.com
@@ -29,12 +30,12 @@ module.exports = {
           'header.json': 'demo.json',
         },
         changeOrigin:true,  // 可以突破对Origin的限制，一般加上即可
-        bypass: function (req, res, proxy) {
+       /* bypass: function (req, res, proxy) {
           // 如果遇到请求html的情况 直接跳过转发流程直接返回
           if (req.headers.accept.indexOf('html') !== -1) {
-            return falde
+            return false
           }
-        },
+        },*/
         headers:{
           host:'www.tannnb.com',  // 配置请求头
           cookie:'cookie'         // 配置cookie 可以模拟鉴权等

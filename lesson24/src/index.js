@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
+import {BrowserRouter, Route} from 'react-router-dom'
 import axios from 'axios'
+
+import Home from './home.js'
+import List from './list.js'
 
 class App extends Component {
 	componentDidMount () {
@@ -12,7 +16,14 @@ class App extends Component {
 	}
 
 	render() {
-		return <div>Hello World</div>
+		return (
+			<BrowserRouter>
+				<div>
+					<Route path='/' exact component={Home} />
+					<Route path='/list' component={List} />
+				</div>
+			</BrowserRouter>
+		)
 	}
 }
 
