@@ -7,9 +7,18 @@ module.exports = {
 	entry: {
 		main: './src/index.js',
 	},
+	resolve:{
+		// 如果配置的过多，webpack救护查找多次，对性能有一定损耗 一般只配置逻辑js类型比如：vue jsx后缀
+		extensions:['.js','.jsx'],   // 根据页面引入的文件 先去匹配js和jsx结尾的文件
+		mainFiles:['index','child'],  // 当你引入一个目录下的文件时，会先尝试去找以index开头的文件，如果没有就匹配child开头的文件,（一般不建议配置这个字段）
+		alias:{
+			components:path.resolve(__dirname,'../src/child')  // 当匹配components或者字符串components的时候，会指向配置的文件目录
+		}
+	},
 	module: {
 		rules: [{
-			test: /\.js$/,
+			// 匹配到js 或者jsx都执行下方babel-loader
+			test: /\.jsx?$/,
 			// 排除node_modules 的loader检测，可以提升webpack速度
 			exclude: /node_modules/,
 			use: [{

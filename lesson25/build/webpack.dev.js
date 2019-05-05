@@ -7,7 +7,7 @@ const devConfig = {
 	devtool: 'cheap-module-eval-source-map',
 	devServer: {
 		contentBase: './dist',
-		open: true,
+		open: false,
 		port: 8080,
 		hot: true
 	},
@@ -15,7 +15,7 @@ const devConfig = {
 		rules: [{
 			test: /\.scss$/,
 			use: [
-				'style-loader', 
+				'style-loader',
 				{
 					loader: 'css-loader',
 					options: {
