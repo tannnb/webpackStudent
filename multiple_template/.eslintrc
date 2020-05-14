@@ -1,0 +1,43 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "extends": ["plugin:@typescript-eslint/recommended","plugin:prettier/recommended"],
+    "plugins": [
+        "@typescript-eslint",
+        "@types/node",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "jsx": true
+        },
+        "project": "./tsconfig.json"
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "indent": [0, 4],
+        "arrow-parens": 0,
+        "generator-star-spacing": 0,
+        "no-debugger": 0,
+        "eol-last": 0,
+        "eqeqeq": 2,
+        "camelcase": 0,
+        "space-before-function-paren": 0,
+        "quotes": ["error", "single"],
+        "@typescript-eslint/explicit-function-return-type": [
+            "off",
+            {
+                "allowExpressions": true,
+                "allowTypedFunctionExpressions": true
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "prettier/prettier": "error"
+    }
+}

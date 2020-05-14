@@ -1,15 +1,13 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import Index from 'components'
-
+import _ from 'lodash'
 
 
 class App extends React.Component{
   render() {
     return (
       <div>
-        <div>this is app</div>
-        <Index />
+        <div>{_.join(['this','is','lodash'],'-')}</div>
       </div>
     )
   }
